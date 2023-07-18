@@ -8,7 +8,13 @@ function Header() {
         <FireIcon height={30} width={30} />
         <h1 className="navLogo">Quiz.</h1>
       </div>
-      <p>About</p>
+      <a
+        style={{ color: "inherit" }}
+        target="__blank"
+        href="https://linkedin.com/in/jithin-p-8396501b7/"
+      >
+        About
+      </a>
     </nav>
   );
 }

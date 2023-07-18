@@ -102,7 +102,7 @@ select {
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
-  margin: 1rem auto;
+  width: max-content;
 }
 .btnPrimary:hover {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -112,7 +112,9 @@ select {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   transform: translateY(1px);
 }
-
+.btnPrimary:disabled {
+  cursor: not-allowed;
+}
 .navbarContainer {
   display: flex;
   align-items: center;
@@ -131,6 +133,10 @@ select {
   color: var(--color--light--dark);
 }
 
+.titlePrimary {
+  font-weight: 500;
+  letter-spacing: -1px;
+}
 /* containers and elements */
 .logoContainer {
   display: flex;
@@ -145,6 +151,7 @@ select {
 .heroDescriptionContainer {
   margin-top: 4rem;
   text-align: center;
+  padding: 1rem;
 }
 .heroDescriptionContainer > h3 {
   font-size: 2.4rem;
@@ -155,16 +162,26 @@ select {
   padding: 2rem 1rem;
   margin: 0 1rem;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  /* height: 50vh; */
+  height: 50vh;
   border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .questionContainer {
   background-color: white;
   padding: 2rem 1rem;
-  margin: 0 1rem;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
+}
+.progressBar {
+  align-self: flex-start;
+  background-color: #835bff;
+  height: 1px;
+  transition: all 0.2s ease;
 }
 .question {
   font-size: 1.4rem;
@@ -180,12 +197,6 @@ select {
   grid-template-rows: 1fr 1fr;
   gap: 1rem;
 }
-@media only screen and (max-width: 570px) {
-  .optionsContainer {
-    grid-template-columns: 1fr;
-    width: auto;
-  }
-}
 
 .option {
   display: flex;
@@ -200,7 +211,74 @@ select {
   height: 40px;
   letter-spacing: -1px;
   transition: all 0.2s ease;
+  background-color: white;
 }
-.option:hover {
-  background-color: rgb(231, 231, 231);
+.wrong {
+  border-color: red;
+}
+.option:disabled {
+  cursor: not-allowed;
+}
+.questionBtnControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto;
+  width: 40rem;
+}
+.timerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color--light--gray);
+  color: white;
+  border-radius: 0.5rem;
+  padding: 0.4rem 1rem;
+}
+
+.correctAnswerBg {
+  background-color: #18a318;
+  color: white;
+  border: none;
+}
+
+.flexedContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.finishedScreenContainer {
+  background-color: white;
+  padding: 2rem 1rem;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 0.5rem;
+}
+.finishedScreenContainer h1 {
+  font-size: 2.5rem;
+  letter-spacing: -2px;
+  font-weight: 600;
+}
+
+.resetBtn {
+  background: none;
+  border: none;
+  outline: none;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 1rem;
+  color: var(--color--light--dark);
+  font-weight: 300;
+  letter-spacing: -1px;
+}
+@media only screen and (max-width: 570px) {
+  .optionsContainer {
+    grid-template-columns: 1fr;
+    width: auto;
+  }
+}
+@media only screen and (max-width: 760px) {
+  .questionBtnControls {
+    width: auto;
+  }
 }

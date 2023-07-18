@@ -1,27 +1,36 @@
 import "./App.css";
-import { useEffect, useReducer, useState } from "react";
-import Header from "./Header";
-import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
-import Main from "./Main.js";
-import { questions } from "./DATA";
-import Question from "./Question";
-import Loading from "./Loading";
-import Error from "./Error";
-import StartScreen from "./StartScreen";
-
-const DATA = questions;
+import { useEffect, useReducer } from "react";
+import Header from "./components/Header";
+import Main from "./components/Main.js";
+import Question from "./components/Question";
+import Loading from "./components/Loading";
+import Error from "./components/Error";
+import StartScreen from "./components/StartScreen";
+import FinishedScreen from "./components/FinishedScreen";
 
 const initialState = {
   questionsArray: [],
   // loading ,error ,ready ,active ,finished
   status: "loading",
   steps: 0,
+  userSelectedAnswer: null,
+  correctAnswer: null,
+  points: 0,
+  progressBarWidth: 0,
+  timeRemaining: 10,
 };
 
 function questionsReducer(state, action) {
   switch (action.type) {
     case "nextStep":
-      return { ...state, steps: state.steps + 1 };
+      return {
+        ...state,
+        steps: state.steps + 1,
+        correctAnswer: null,
+        userSelectedAnswer: null,
+        progressBarWidth:
+          state.progressBarWidth + 100 / state.questionsArray.length,
+      };
     case "setQuestions":
       return { ...state, questionsArray: action.payload };
     case "setLoading":
@@ -29,21 +38,63 @@ function questionsReducer(state, action) {
     case "setError":
       return { ...state, status: "error" };
     case "setReady":
-      return { ...state, status: "ready" };
+      return {
+        ...state,
+        status: "ready",
+        progressBarWidth: 100 / state.questionsArray.length,
+      };
     case "setActive":
-      return { ...state, status: "active" };
+      return {
+        ...state,
+        status: "active",
+        timeRemaining: state.questionsArray.length * 20,
+      };
     case "setFinished":
       return { ...state, status: "finished" };
+    case "setCorrectAnswer":
+      return { ...state, correctAnswer: action.payload };
+    case "setAnswer":
+      return {
+        ...state,
+        userSelectedAnswer: action.payload,
+      };
+    case "setAnswerNull":
+      return { ...state, userSelectedAnswer: null };
+    case "addPoint":
+      return { ...state, points: state.points + 1 };
+    case "resetQuiz":
+      return {
+        ...initialState,
+        questionsArray: state.questionsArray,
+        status: "ready",
+      };
+    case "setTimeRemaining":
+      return {
+        ...state,
+        timeRemaining: state.timeRemaining - 1,
+        status: state.timeRemaining === 0 ? "finished" : state.status,
+      };
+
     default:
       throw Error("unhandled reducer dispatch");
   }
 }
 
 function App() {
-  const [{ questionsArray, steps, status }, dispatch] = useReducer(
-    questionsReducer,
-    initialState
-  );
+  const [
+    {
+      questionsArray,
+      status,
+      userSelectedAnswer,
+      steps,
+      points,
+      timeRemaining,
+      progressBarWidth,
+    },
+    dispatch,
+  ] = useReducer(questionsReducer, initialState);
+
+  let arrLength = questionsArray.length;
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -60,6 +111,12 @@ function App() {
     fetchQuestions();
   }, []);
 
+  const handleNextQuestion = () => {
+    if (steps >= 0 && steps < questionsArray.length - 1) {
+      dispatch({ type: "nextStep" });
+    }
+  };
+
   return (
     <div className="App">
       <Header />
@@ -69,18 +126,25 @@ function App() {
         {status === "ready" && (
           <StartScreen dispatch={dispatch} length={questionsArray.length} />
         )}
-        {status === "active" && <Question questions={questionsArray} />}
+        {status === "active" && (
+          <Question
+            questions={questionsArray}
+            userSelectedAnswer={userSelectedAnswer}
+            dispatch={dispatch}
+            handleNextQuestion={handleNextQuestion}
+            steps={steps}
+            progressBarWidth={progressBarWidth}
+            points={points}
+            arrLength={arrLength}
+            timeRemaining={timeRemaining}
+          />
+        )}
+        {status === "finished" && (
+          <FinishedScreen points={points} dispatch={dispatch} />
+        )}
       </Main>
     </div>
   );
 }
 
 export default App;
-
-function Qustion({ question }) {
-  return (
-    <div>
-      <p>{question.question}</p>
-    </div>
-  );
-}

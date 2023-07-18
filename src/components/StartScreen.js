@@ -4,8 +4,11 @@ import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 function StartScreen({ dispatch, length }) {
   return (
     <div className="startScreenContainer">
-      <h3 className="lightDarkText">Welcome to react Quiz</h3>
-      <p className="lightText" style={{ marginTop: ".2rem" }}>
+      <h1 className="lightDarkText titlePrimary">Welcome to react Quiz</h1>
+      <p
+        className="lightText"
+        style={{ margin: ".2rem 0", letterSpacing: "-1px" }}
+      >
         {length} questions to test your ReactJs knowledge
       </p>
       <button
