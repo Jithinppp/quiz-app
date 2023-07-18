@@ -1,38 +1,206 @@
-.App {
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --color--primary: #835bff;
+  --color--light--gray: #949faf;
+  --color--light--dark: #2b2b2b;
+}
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  font-family: "Inter", sans-serif;
+  color: rgb(41, 41, 41);
+  background-size: 10px 10px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(132, 91, 255, 0.08) 0,
+    rgba(132, 91, 255, 0.08) 1px,
+    rgba(229, 229, 247, 0.108) 0,
+    rgba(229, 229, 247, 0.08) 50%
+  );
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* util classes */
+
+.btnPrimary {
+  background-color: var(--color--primary);
+  color: white;
+  padding: 0.4rem 2rem;
+  border-radius: 0.3rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  margin: 1rem auto;
+}
+.btnPrimary:hover {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  transform: translateY(-1px);
+}
+.btnPrimary:active {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  transform: translateY(1px);
+}
+
+.navbarContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem 3rem;
+  margin: 1.5rem 1rem;
+  background-color: white;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 1rem;
+}
+
+.lightText {
+  color: var(--color--light--gray);
+}
+.lightDarkText {
+  color: var(--color--light--dark);
+}
+
+/* containers and elements */
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.navLogo {
+  font-weight: 400;
+  letter-spacing: -1px;
+}
+
+.heroDescriptionContainer {
+  margin-top: 4rem;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.heroDescriptionContainer > h3 {
+  font-size: 2.4rem;
+  letter-spacing: -2px;
+}
+.startScreenContainer {
+  background-color: white;
+  padding: 2rem 1rem;
+  margin: 0 1rem;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  /* height: 50vh; */
+  border-radius: 1rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.questionContainer {
+  background-color: white;
+  padding: 2rem 1rem;
+  margin: 0 1rem;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 1rem;
+}
+.question {
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: -1px;
+  margin: 1rem 0;
+}
+.optionsContainer {
+  width: 30rem;
+  margin: 2rem auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+}
+@media only screen and (max-width: 570px) {
+  .optionsContainer {
+    grid-template-columns: 1fr;
+    width: auto;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.option {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  align-self: center;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  font-weight: 300;
+  text-transform: capitalize;
+  cursor: pointer;
+  height: 40px;
+  letter-spacing: -1px;
+  transition: all 0.2s ease;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.option:hover {
+  background-color: rgb(231, 231, 231);
 }
