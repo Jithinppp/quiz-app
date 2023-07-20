@@ -80,6 +80,9 @@ function questionsReducer(state, action) {
   }
 }
 
+const URL = process.env.REACT_APP_DB_URL;
+console.log(URL);
+
 function App() {
   const [
     {
@@ -100,9 +103,9 @@ function App() {
     const fetchQuestions = async () => {
       try {
         dispatch({ type: "setLoading" });
-        const res = await fetch("http://localhost:8000/questions");
+        const res = await fetch(`${URL}questions`);
         const data = await res.json();
-        dispatch({ type: "setQuestions", payload: data });
+        dispatch({ type: "setQuestions", payload: data.questions });
         dispatch({ type: "setReady" });
       } catch (error) {
         dispatch({ type: "setError" });
